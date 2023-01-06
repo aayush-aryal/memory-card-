@@ -1,3 +1,63 @@
-body{
+:root {
+  box-sizing: border-box;
+}
+
+body {
   margin: 0;
+}
+
+.cards--grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.front,
+.back {
+  width: 300px;
+  height: 300px;
+  border-radius: 5px;
+  background-color: blue;
+  display: block;
+}
+
+.front {
+  object-fit: contain;
+}
+
+.card--container {
+  position: relative;
+}
+
+@media (max-width: 600px) {
+  .front,
+  .back {
+    width: 130px;
+    height: 130px; /* or any other desired width */
+  }
+  .cards--grid {
+    grid-template-columns: repeat(4, 0.5fr);
+    gap: 5px;
+  }
+}
+
+.card--container .front {
+  position: absolute;
+  transform: rotateY(90deg);
+  transition: all ease-in 0.2s;
+}
+
+.flipped .front {
+  transform: rotateY(0deg);
+  transition-delay: 0.2ms;
+}
+
+.flipped .back {
+  transform: rotateY(90deg);
+  transition-delay: 0s;
+}
+
+.card--container .back {
+  transition: all ease-in 0.2s;
+  transition-delay: 0s;
 }
