@@ -1,4 +1,10 @@
 const Card = (props) => {
+  // perform function from prop only when not disabled
+  function handleDisabledandChoice() {
+    if (!props.disabled) {
+      props.handleChoice(props.card);
+    }
+  }
   return (
     <div className="card--container">
       <div className={props.flipped ? "flipped" : ""}>
@@ -7,7 +13,7 @@ const Card = (props) => {
           src="./assets/back.png"
           alt="back image"
           className="back"
-          onClick={() => props.handleChoice(props.card)}
+          onClick={handleDisabledandChoice}
         />
       </div>
     </div>
