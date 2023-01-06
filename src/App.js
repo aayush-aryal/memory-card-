@@ -16,6 +16,7 @@ function App() {
   const [turns, setTurns] = useState(0);
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
+  const [disabled, setDisabled] = useState(false);
   // shuffle array and add id
   function shuffleArray() {
     const shuffledAnimeArray = [...animeArray, ...animeArray]
@@ -36,15 +37,16 @@ function App() {
   // function to evaluate choice using useEffect(everytime change in choice)
   useEffect(() => {
     if (choiceOne && choiceTwo) {
+      setDisabled(true);
       if (choiceOne.src === choiceTwo.src) {
         setAnimeCards((prevCards) => {
           return prevCards.map((card) =>
             card.src === choiceOne.src ? { ...card, matched: true } : card
           );
         });
-        resetChoice();
+        setTimeout(() => resetChoice(), 1000);
       } else {
-        resetChoice();
+        setTimeout(() => resetChoice(), 1000);
       }
     }
   }, [choiceOne, choiceTwo]);
@@ -54,11 +56,13 @@ function App() {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns((prev) => prev + 1);
+    setDisabled(false);
   }
   return (
     <div className="App">
       <h1>Anime Memory</h1>
       <button onClick={shuffleArray}>New Game</button>
+      <p>Turns: {turns}</p>
       <div className="cards--grid">
         {animeCards.map((card) => (
           <Card
@@ -67,6 +71,7 @@ function App() {
             card={card}
             handleChoice={handleChoice}
             flipped={card === choiceOne || card === choiceTwo || card.matched}
+            disabled={disabled}
           />
         ))}
       </div>
