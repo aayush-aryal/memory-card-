@@ -58,11 +58,20 @@ function App() {
     setTurns((prev) => prev + 1);
     setDisabled(false);
   }
+
+  // load game on first load
+  useEffect(() => {
+    shuffleArray();
+  }, []);
   return (
     <div className="App">
-      <h1>Anime Memory</h1>
-      <button onClick={shuffleArray}>New Game</button>
-      <p>Turns: {turns}</p>
+      <div className="header">
+        <h1 className="title">Anime Memory</h1>
+        <button onClick={shuffleArray} className="new--game">
+          New Game
+        </button>
+        <p className="turns">Turns: {turns}</p>
+      </div>
       <div className="cards--grid">
         {animeCards.map((card) => (
           <Card
